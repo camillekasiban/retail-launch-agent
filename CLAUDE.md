@@ -18,10 +18,14 @@ This agent tracks Shopify Retail/POS merchant implementations from kickoff throu
 - Provide portfolio-level risk and health views across the full book of business
 
 **This agent does NOT:**
-- Connect to Salesforce, Gmail, Slack, or any external system (fully offline, no MCP dependencies)
 - Write external-facing content or make commitments to merchants
 - Commit files to git or push to remote repositories
 - Invent milestone names not in `templates/milestone-framework.md`
+
+**Optional integrations (require MCP connections):**
+- **Google Workspace MCP** — enables `pull intake for [Name]` to fetch emails from Gmail and documents from Google Drive by merchant name keyword
+- **Fellow MCP** — enables `pull intake for [Name]` to fetch meeting transcripts by merchant name keyword
+- Without these MCPs, all intake is file-based (drop files into `intake/unprocessed/` manually)
 
 ---
 
@@ -130,6 +134,7 @@ Recognize natural variations of these commands. The canonical forms are shown bu
 |---|---|
 | `add merchant [Name]` | Create `merchants/[Name]/` and `merchants/[Name]/intake/unprocessed/`. Copy all 4 templates. Substitute merchant name. Prompt for: launch target date, implementation partner name (or "None"), SE owner name (default from personal-config.md). |
 | `attach vtp for [Name]` | Read `merchants/[Name]/vtp.md` (the user should already have placed it there). Extract: go-live date(s), partner name, brand/location count, POS customizations required, integration landscape, explicit out-of-scope items. Pre-populate the merchant's Decisions Log with confirmed scope facts and flag any POS customizations or non-native integrations as open risks. Report what was extracted. |
+| `pull intake for [Name]` | Fetch recent content mentioning [Name] from Gmail, Google Drive, and Fellow. Save each result as a dated `.md` file in `merchants/[Name]/intake/unprocessed/`. Report what was found. Requires Google Workspace MCP and Fellow MCP. See Section 11 for the full protocol. |
 | `process intake for [Name]` | Run the Intake Processing Protocol (Section 7) on all files in `merchants/[Name]/intake/unprocessed/`. |
 | `process intake` | Scan global `intake/` for files. If multiple files exist, ask the user which merchant each belongs to. Then process each accordingly. |
 | `weekly digest` | Read all merchants' `health-summary.md` files. Print a portfolio table: merchant name, health badge, launch target, days to go-live, open Critical/High count. Then list: launches within 30 days, all Critical risks across portfolio. |
@@ -290,3 +295,85 @@ The `sample-merchant/` folder is always included in site generation as a demo �
 - Remind them which files are safe to commit (templates, CLAUDE.md, scripts, sample-merchant, README)
 - Remind them which are not (merchants/, intake/, personal-config.md, docs/, site/)
 - Suggest running `git status` to verify before committing
+
+---
+
+## Section 11 — Pull Intake Protocol (Google Workspace + Fellow)
+
+Run this protocol when the user says `pull intake for [Name]`. Requires Google Workspace MCP and Fellow MCP.
+
+### Search window
+Default: last 14 days from today. If the user specifies a different window (e.g., "pull intake for the last 30 days"), use that instead.
+
+### Step 1 — Gmail
+
+Search Gmail for emails mentioning the merchant name:
+- Tool: `gws_gmail_search` with query `[merchant name]` and date filter `after:YYYY/MM/DD`
+- For each result, read the full email with `gws_gmail_read`
+- Skip emails where the merchant name only appears in a signature or boilerplate
+- Save each qualifying email as:
+  - Filename: `merchants/[Name]/intake/unprocessed/YYYY-MM-DD-email-[subject-slug].md`
+  - Format: see Saved File Format below
+
+### Step 2 — Google Drive
+
+Search Drive for documents mentioning the merchant name:
+- Tool: `gws_drive_search` with query `[merchant name]`
+- Filter to docs modified within the search window
+- For each result, read content with `mcp__gworkspace-mcp__read_file`
+- Skip files that are clearly unrelated (e.g., merchant name only in a footer or unrelated table)
+- Skip files already processed (check if a file with the same title slug exists in `intake/`)
+- Save each qualifying doc as:
+  - Filename: `merchants/[Name]/intake/unprocessed/YYYY-MM-DD-doc-[title-slug].md`
+  - Format: see Saved File Format below
+
+### Step 3 — Fellow meeting transcripts
+
+Search Fellow for meetings mentioning the merchant name:
+- Tool: `mcp__fellow-mcp__search_meetings` with `note_summary` or `transcript` set to the merchant name, and `from_date` / `to_date` set to the search window
+- For each result, fetch the transcript with `mcp__fellow-mcp__get_meeting_transcript`
+- Save each qualifying transcript as:
+  - Filename: `merchants/[Name]/intake/unprocessed/YYYY-MM-DD-transcript-[meeting-title-slug].md`
+  - Format: see Saved File Format below
+
+### Saved File Format
+
+Every pulled file must begin with a metadata header so the intake processor can classify it correctly:
+
+```
+---
+pulled: YYYY-MM-DD
+source: gmail | drive | fellow
+type: email | document | transcript
+merchant: [Name]
+title: [original subject or document title]
+original_date: YYYY-MM-DD
+---
+
+[content]
+```
+
+### Step 4 — Deduplication
+
+Before saving any file, check whether a file with the same `original_date` and `title` slug already exists anywhere in `merchants/[Name]/intake/` (including archived files). If it does, skip it and note it in the report as "already processed."
+
+### Step 5 — Report
+
+After pulling, output:
+
+```
+Pull complete for [Name]
+Search window: YYYY-MM-DD to YYYY-MM-DD
+
+Found:
+- Gmail: [N] emails saved, [N] skipped (already processed or not relevant)
+- Drive: [N] documents saved, [N] skipped
+- Fellow: [N] transcripts saved, [N] skipped
+
+Files saved to merchants/[Name]/intake/unprocessed/:
+- [list each filename]
+
+Run "process intake for [Name]" to extract and update tracking files.
+```
+
+If any MCP is unavailable, skip that source and note it in the report rather than failing the entire pull.

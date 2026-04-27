@@ -64,11 +64,15 @@ The agent creates `merchants/[Name]/` with all template files and prompts for th
 
 ## Weekly Workflow
 
-**1. Drop intake files**
+**1. Pull or drop intake files**
 
-Copy transcripts, emails, or notes into `merchants/[Name]/intake/unprocessed/` as `.md` or `.txt` files.
+If you have Google Workspace MCP and Fellow MCP connected, the agent can fetch content for you:
+```
+pull intake for [Merchant Name]
+```
+This searches Gmail, Google Drive, and Fellow for anything mentioning the merchant name in the last 14 days and saves results to `merchants/[Name]/intake/unprocessed/` automatically.
 
-Or drop files into the global `intake/` folder — the agent will ask which merchant they belong to.
+Or drop files manually: copy transcripts, emails, or notes into `merchants/[Name]/intake/unprocessed/` as `.md` or `.txt` files. Or drop into the global `intake/` folder — the agent will ask which merchant they belong to.
 
 **2. Process intake**
 
