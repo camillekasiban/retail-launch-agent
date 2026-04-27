@@ -1,0 +1,21 @@
+# Personal Config
+
+<!-- Copy this file to personal-config.md and fill in your details.
+     personal-config.md is gitignored — your name and settings stay local. -->
+
+se_name: "Your Name"
+se_email: "your.email@shopify.com"
+team: "Large Segment"
+region: "Americas"        # Americas | EMEA | APAC
+timezone: "EST"
+
+# Dashboard display
+dashboard_title: "Retail Launch Portfolio"
+show_partner_names: true       # Set false to hide partner names in generated HTML
+days_warning_threshold: 14     # Show YELLOW warning when launch is within this many days
+stale_threshold_days: 14       # Flag merchant as potentially stale after N days without intake
+
+# Publishing (used by scripts/publish.sh)
+# Set these up once after creating your private GitHub repo
+private_repo_url: ""           # git@github.com:YOUR_USERNAME/YOUR_PRIVATE_REPO.git
+pages_url: ""                  # https://YOUR_USERNAME.github.io/YOUR_PRIVATE_REPO/

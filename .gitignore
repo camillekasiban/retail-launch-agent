@@ -1,0 +1,32 @@
+# Real merchant data — never commit to public template repo
+merchants/*
+!merchants/.gitkeep
+
+# Raw intake drop zone
+intake/*
+!intake/.gitkeep
+
+# Site output — generated files, not source
+docs/*
+!docs/.gitkeep
+site/*
+!site/.gitkeep
+
+# Personal config — never commit
+personal-config.md
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Editors
+.vscode/
+.cursor/
+*.swp
+*.swo
