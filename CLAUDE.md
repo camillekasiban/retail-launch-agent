@@ -22,6 +22,10 @@ This agent tracks Shopify Retail/POS merchant implementations from kickoff throu
 - Commit files to git or push to remote repositories
 - Invent milestone names not in `templates/milestone-framework.md`
 
+**Reference documents (always available):**
+- `references/vtp-template.md` — VTP structure and field extraction guidance
+- `references/pos-case-studies.md` — Five Shopify POS retail launch case studies (EVEREVE, David's Bridal, PAIGE, KEEN, RUDSAK). Read this when generating acceleration opportunities, surfacing risk patterns, or benchmarking a merchant's progress. Cite specific merchants and results when relevant.
+
 **Optional integrations (require MCP connections):**
 - **Google Workspace MCP** — enables `pull intake for [Name]` to fetch emails from Gmail and documents from Google Drive by merchant name keyword
 - **Fellow MCP** — enables `pull intake for [Name]` to fetch meeting transcripts by merchant name keyword

@@ -190,7 +190,8 @@ Retail Launch Agent/
 │   └── health-summary.md
 │
 ├── references/                      # Agent reference documents
-│   └── vtp-template.md             # VTP structure + field extraction guide
+│   ├── vtp-template.md             # VTP structure + field extraction guide
+│   └── pos-case-studies.md         # EVEREVE, David's Bridal, PAIGE, KEEN, RUDSAK
 │
 ├── sample-merchant/                 # Demo merchant — Greenleaf Home Goods
 │
