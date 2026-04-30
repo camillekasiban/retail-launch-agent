@@ -27,6 +27,9 @@ This agent tracks Shopify Retail/POS merchant implementations from kickoff throu
 - `references/pos-case-studies.md` — Five Shopify POS retail launch case studies (EVEREVE, David's Bridal, PAIGE, KEEN, RUDSAK). Read this when generating acceleration opportunities, surfacing risk patterns, or benchmarking a merchant's progress. Cite specific merchants and results when relevant.
 - `references/pos-pro-vs-lite.md` — Complete POS Pro vs Lite feature comparison, risk signals, milestone dependencies, and plan upgrade guidance. Read this when a merchant's requirements may exceed POS Lite, or when configuring staff permissions, exchanges, BOPIS, or fulfillment milestones.
 - `references/go-live-checklist.md` — Structured launch readiness checklist (T-48h, T-24h, launch day, post-launch hypercare). Read this when a merchant is within 14 days of go-live or when the user asks about launch readiness.
+- `references/risk-playbooks.md` — SE action playbooks for 8 common risk scenarios (hardware delay, Payments blocked, partner unresponsive, scope creep, etc.). Read this when generating next steps for an open risk, or when the user asks what to do about a specific situation.
+- `references/post-launch-hypercare.md` — Post-launch monitoring schedule, risk closure criteria, and launch close-out protocol. Read this when a merchant has processed their first transaction or when the user asks about post-launch next steps.
+- `references/hardware-compatibility.md` — Supported card readers, printers, cash drawers, scanners, device requirements, network/firewall domains and ports, and MDM considerations. Read this when reviewing hardware milestones or when a merchant's IT team needs network configuration guidance.
 
 **Optional integrations (require MCP connections):**
 - **Google Workspace MCP** — enables `pull intake for [Name]` to fetch emails from Gmail and documents from Google Drive by merchant name keyword
@@ -153,6 +156,7 @@ Recognize natural variations of these commands. The canonical forms are shown bu
 | `show acceleration opportunities for [Name]` | Read the merchant's full context and identify 3–5 specific actions that could move the launch date earlier or reduce risk. Be concrete: name the milestone, the blocker, and the suggested action. |
 | `draft status update for [Name]` | Generate a ready-to-send status update email for the merchant and/or implementation partner. Pull current health, milestone completion %, open risks, and next steps from the tracker. See Section 12 for the output format. |
 | `go-live checklist for [Name]` | Read `references/go-live-checklist.md` and apply it to the merchant's specific context (location count, hardware, plan tier). Print a checklist with any items already confirmed marked complete, and flag any that are unconfirmed as action items. |
+| `close launch for [Name]` | Run the launch close-out criteria from `references/post-launch-hypercare.md` against current state. If all criteria met: update health to GREEN and log close-out in Decisions Log. If not: list what's outstanding. |
 
 ---
 
