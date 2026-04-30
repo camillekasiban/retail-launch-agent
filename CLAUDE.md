@@ -25,6 +25,8 @@ This agent tracks Shopify Retail/POS merchant implementations from kickoff throu
 **Reference documents (always available):**
 - `references/vtp-template.md` — VTP structure and field extraction guidance
 - `references/pos-case-studies.md` — Five Shopify POS retail launch case studies (EVEREVE, David's Bridal, PAIGE, KEEN, RUDSAK). Read this when generating acceleration opportunities, surfacing risk patterns, or benchmarking a merchant's progress. Cite specific merchants and results when relevant.
+- `references/pos-pro-vs-lite.md` — Complete POS Pro vs Lite feature comparison, risk signals, milestone dependencies, and plan upgrade guidance. Read this when a merchant's requirements may exceed POS Lite, or when configuring staff permissions, exchanges, BOPIS, or fulfillment milestones.
+- `references/go-live-checklist.md` — Structured launch readiness checklist (T-48h, T-24h, launch day, post-launch hypercare). Read this when a merchant is within 14 days of go-live or when the user asks about launch readiness.
 
 **Optional integrations (require MCP connections):**
 - **Google Workspace MCP** — enables `pull intake for [Name]` to fetch emails from Gmail and documents from Google Drive by merchant name keyword
@@ -149,6 +151,8 @@ Recognize natural variations of these commands. The canonical forms are shown bu
 | `show milestone status for [Name]` | Print the milestone table with per-phase completion counts and an overall percentage. Highlight any milestones that are Blocked. |
 | `what needs attention` | Alias for weekly digest, but output only RED and YELLOW merchants. Open each with a brief "why" narrative. |
 | `show acceleration opportunities for [Name]` | Read the merchant's full context and identify 3–5 specific actions that could move the launch date earlier or reduce risk. Be concrete: name the milestone, the blocker, and the suggested action. |
+| `draft status update for [Name]` | Generate a ready-to-send status update email for the merchant and/or implementation partner. Pull current health, milestone completion %, open risks, and next steps from the tracker. See Section 12 for the output format. |
+| `go-live checklist for [Name]` | Read `references/go-live-checklist.md` and apply it to the merchant's specific context (location count, hardware, plan tier). Print a checklist with any items already confirmed marked complete, and flag any that are unconfirmed as action items. |
 
 ---
 
@@ -381,3 +385,60 @@ Run "process intake for [Name]" to extract and update tracking files.
 ```
 
 If any MCP is unavailable, skip that source and note it in the report rather than failing the entire pull.
+
+---
+
+## Section 12 — Status Update Email Format
+
+Use this format when the user says `draft status update for [Name]`. Generate a ready-to-send email the SE can copy directly to the merchant and/or partner.
+
+```
+Subject: [Merchant Name] — POS Launch Update | [YYYY-MM-DD]
+
+Hi [Partner/Merchant name],
+
+Quick update on where we stand heading into [this week / next week].
+
+**Overall Status: [🔴 RED — At Risk / 🟡 YELLOW — Needs Attention / 🟢 GREEN — On Track]**
+[One sentence explaining why — e.g., "We're on track with X days to go-live and no open blockers."]
+
+---
+
+**Milestone Progress: [X / 43] ([N]%) complete**
+
+Progress this week:
+- [Milestone name] → [new status] ✅
+- [Milestone name] → [new status] ✅
+
+Coming up:
+- [Milestone name] — due [date], owner: [name]
+- [Milestone name] — due [date], owner: [name]
+
+---
+
+**Open Risks**
+
+[If any Critical or High risks:]
+⚠️ [Risk description] — [owner], due [date]
+[If none:] No critical or high risks open.
+
+---
+
+**What I need from you**
+
+- [Specific ask #1 — owner, due date]
+- [Specific ask #2 — owner, due date]
+
+---
+
+Let me know if you have any questions. Next check-in: [date].
+
+[SE name]
+```
+
+**Rules for drafting:**
+- Tone: direct, factual, no filler. One sentence per point.
+- Only include milestones that changed status this week or are due in the next 7 days.
+- "What I need from you" should only contain open questions or next steps that are blocked on the merchant or partner — not SE-owned items.
+- If health is RED, lead with the single most important action needed to move it to YELLOW.
+- Default addressee is the implementation partner unless the user specifies merchant.
