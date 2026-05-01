@@ -191,7 +191,14 @@ Retail Launch Agent/
 │
 ├── references/                      # Agent reference documents
 │   ├── vtp-template.md             # VTP structure + field extraction guide
-│   └── pos-case-studies.md         # EVEREVE, David's Bridal, PAIGE, KEEN, RUDSAK
+│   ├── pos-case-studies.md         # EVEREVE, David's Bridal, PAIGE, KEEN, RUDSAK
+│   ├── pos-pro-vs-lite.md          # Feature comparison, risk signals, milestone dependencies
+│   ├── go-live-checklist.md        # T-48h through post-launch hypercare checklist
+│   ├── risk-playbooks.md           # SE action guides for 8 common risk scenarios
+│   ├── post-launch-hypercare.md    # Hypercare schedule, risk closure, launch close-out
+│   ├── hardware-compatibility.md   # Devices, network requirements, MDM guidance
+│   ├── pos-native-vs-extension.md  # Native vs. app vs. UI Extension capability map
+│   └── pos-app-ecosystem.md        # POS-compatible apps by category
 │
 ├── sample-merchant/                 # Demo merchant — Greenleaf Home Goods
 │
